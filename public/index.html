@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Arm Control</title>
+</head>
+
+<body>
+    <button id="move">move</button>
+    channel:
+    <input value="5" id="channel" /> on:
+    <input value="0" id="on" /> off:
+    <input value="150" id="off" /> freq:
+    <input value="50" id="freq" />
+    <div id="result">...</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script>
+    $("#move").click(function() {
+        //$( ".result" ).load( "ajax/test.html" );
+        console.log("move");
+        channel = $("#channel").val();
+        on = $("#on").val();
+        off = $("#off").val();
+        freq = $("#freq").val();
+        s = "/channel/"
+        s += channel;
+        s += "/on/"
+        s += on;
+        s += "/off/"
+        s += off;
+        s += "/freq/"
+        s += freq;
+        console.log(s);
+        $("#result").load(s, function() {
+            //alert("Load was performed.");
+        });
+    });
+    </script>
+</body>
+
+</html>
