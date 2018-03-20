@@ -4,35 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Arm Control</title>
-
-        <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap-slider.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
     #ex1Slider .slider-selection {
-	background: #BABABA;
-}
-</style>
+        background: #BABABA;
+    }
+
+    table {
+        font-size: 1em;
+    }
+
+    .ui-draggable,
+    .ui-droppable {
+        background-position: top;
+    }
+    </style>
 </head>
 
 <body>
     <button id="move">move</button> freq:
-    <input value="244" id="freq" />
-    <div id ="inputs">
-        
-        <p>Channel 0: <input value="90" id="angleZero"/></p>
-        <p>Channel 1: <input value="90" id="angleOne"/></p>
-        <p>Channel 2: <input value="90" id="angleTwo"/></p>
-        <p>Channel 3: <input value="90" id="angleThree"/></p>
-        <p>Channel 4: <input value="90" id="angleFour"/></p>
-        <p>Channel 5: <input value="90" id="angleFive"/></p>
+    <input value="40" id="freq" />
+    <div id="inputs">
+        <p>Channel 0:
+            <input value="90" id="angleZero" />
+            <div id="s0"></div>
+        </p>
+        <p>Channel 1:
+            <input value="90" id="angleOne" />
+        </p>
+        <p>Channel 2:
+            <input value="90" id="angleTwo" />
+        </p>
+        <p>Channel 3:
+            <input value="90" id="angleThree" />
+        </p>
+        <p>Channel 4:
+            <input value="90" id="angleFour" />
+        </p>
+        <p>Channel 5:
+            <input value="90" id="angleFive" />
+        </p>
     </div>
     <div id="result">...</div>
     <script src="jquery.min.js"></script>
-        <script src="bootstrap-slider.js"></script>
-
+    <script src="bootstrap-slider.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-
-// Without JQuery
+    // Without JQuery
     $("#move").click(function() {
 
         freq = $("#freq").val();
@@ -76,13 +96,36 @@
         });
     });
 
-    function angleToOff(angle, frequency){
-        var cycle = 1000/frequency;
+    function angleToOff(angle, frequency) {
+        var cycle = 1000 / frequency;
         var tickTime = 1000 * cycle / 4096;
         var ms = (angle * 100 / 9) + 500;
         return ms / tickTime;
     }
+    </script>
+    <script>
+    $(function() {
+        function updateServos() {
+            s0 = $("#s0").slider("value"),
+                console.log(s0);
+            $('#angleZero').val(s0);
 
+            freq = $("#freq").val();
+            angleZero = $('#angleZero').val();
+            s = "/channel/0/on/0/off/" + angleToOff(angleZero, freq) + "/freq/" + freq;
+            console.log(s);
+            $("#result").load(s, function() {});
+        }
+        $("#s0").slider({
+            change: updateServos,
+            slide: updateServos,
+            min: 0,
+            max: 180,
+            value: 90,
+            step: 5,
+
+        });
+    });
     </script>
 </body>
 

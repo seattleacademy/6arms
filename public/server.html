@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Slider - Range slider</title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery.min.js"></script>
+  <script src="jquery-ui.js"></script>
+
+  <script>
+  $( function() {
+    $( "#slider" ).slider({
+      //range: true,
+      min: 0,
+      max: 180,
+      //values: [ 75, 300 ],
+      change: function( event, ui ) {
+        console.log(ui.value);
+      }
+    });
+  } );
+  </script>
+</head>
+<body>
+ 
+ 
+<div id="slider">Hello</div>
+ 
+ 
+</body>
+</html>
