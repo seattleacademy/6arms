@@ -1,89 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Arm Control</title>
-
+    <head>
+        <meta charset="UTF-8">
+        <title>Arm Control</title>
         <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap-slider.css" rel="stylesheet">
-    <style>
-    #ex1Slider .slider-selection {
-	background: #BABABA;
-}
-</style>
-</head>
-
-<body>
-    <button id="move">move</button> freq:
-    <input value="244" id="freq" />
-    <div id ="inputs">
-        
-        <p>Channel 0: <input value="90" id="angleZero"/></p>
-        <p>Channel 1: <input value="90" id="angleOne"/></p>
-        <p>Channel 2: <input value="90" id="angleTwo"/></p>
-        <p>Channel 3: <input value="90" id="angleThree"/></p>
-        <p>Channel 4: <input value="90" id="angleFour"/></p>
-        <p>Channel 5: <input value="90" id="angleFive"/></p>
-    </div>
-    <div id="result">...</div>
-    <script src="jquery.min.js"></script>
+        <link href="bootstrap-slider.css" rel="stylesheet">
+        <style>
+            #ex1Slider .slider-selection {
+        	   background: #BABABA;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="move">move</button> freq:
+        <input value="40" id="freq" />
+        <div id ="inputs">
+            <p>Channel 0: <input value="90" id="angleZero"/><button id ="moveZero">Move</button></p>
+            <p>Channel 1: <input value="90" id="angleOne"/><button id ="moveOne">Move</button></p>
+            <p>Channel 2: <input value="90" id="angleTwo"/><button id ="moveTwo">Move</button></p>
+            <p>Channel 3: <input value="90" id="angleThree"/><button id ="moveThree">Move</button></p>
+            <p>Channel 4: <input value="90" id="angleFour"/><button id ="moveFour">Move</button></p>
+            <p>Channel 5: <input value="90" id="angleFive"/><button id ="moveFive">Move</button></p>
+        </div>
+        <div id="result">...</div>
+        <script src="jquery.min.js"></script>
         <script src="bootstrap-slider.js"></script>
+        <script>
 
-    <script>
+        var freq = 40;
+        var range = 3;
 
-// Without JQuery
-    $("#move").click(function() {
+        var targets = [90, 90, 90, 90, 90, 90];
+        var currents = [90, 90, 90, 90, 90, 90];
 
-        freq = $("#freq").val();
-        angleZero = $('#angleZero').val();
-        angleOne = $('#angleOne').val();
-        angleTwo = $('#angleTwo').val();
-        angleThree = $('#angleThree').val();
-        angleFour = $('#angleFour').val();
-        angleFive = $('#angleFive').val();
+        function setAll(){
+            for(var i = 0; i < 6; i++){
+                if(currents[i]==targets[i]){
+
+                }else{
+                    var s = "/channel/" + i + "/on/0/off/" + angleToOff(currents[i], freq) + "/freq/" + freq;
+                    $("#result").load(s, function() {}); 
+                }   
+            }
+        }
+
+        function moveSmallZero(){
+            if(targets[0]==currents[0]){
+                return;
+            }else if(targets[0] < currents[0]){
+                currents[0]--;
+            }else{
+                currents[0]++;
+            }
+            console.log(targets[0] + ", "+ currents[0]);
+            setTimeout(moveSmallZero, 500);
+        }
+
+        function moveSmallOne(){
+            if(targets[1]==currents[1]){
+                return;
+            }else if(targets[1] < currents[1]){
+                currents[1]--;
+            }else{
+                currents[1]++;
+            }
+            console.log(targets[1] + ", "+ currents[1]);
+            setTimeout(moveSmallOne, 500);
+        }
+
+        function moveSmallTwo(){
+            if(targets[2]==currents[2]){
+                return;
+            }else if(targets[2] < currents[2]){
+                currents[2]--;
+            }else{
+                currents[2]++;
+            }
+            console.log(targets[2] + ", "+ currents[2]);
+            setTimeout(moveSmallTwo, 500);
+        }
+
+        function moveSmallThree(){
+            if(targets[3]==currents[3]){
+                return;
+            }else if(targets[3] < currents[3]){
+                currents[3]--;
+            }else{
+                currents[3]++;
+            }
+            console.log(targets[3] + ", "+ currents[3]);
+            setTimeout(moveSmallThree, 500);
+        }
+
+        function moveSmallFour(){
+            if(targets[4]==currents[4]){
+                return;
+            }else if(targets[4] < currents[4]){
+                currents[4]--;
+            }else{
+                currents[4]++;
+            }
+            console.log(targets[4] + ", "+ currents[4]);
+            setTimeout(moveSmallFour, 500);
+        }
+        
+        function moveSmallFive(){
+            if(targets[5]==currents[5]){
+                return;
+            }else if(targets[5] < currents[5]){
+                currents[5]--;
+            }else{
+                currents[5]++;
+            }
+            console.log(targets[5] + ", "+ currents[5]);
+            setTimeout(moveSmallFive, 500);
+        }        
+
+            $('#moveZero').click(function() {
+                freq = $("#freq").val();
+                targets[0] = $('#angleZero').val();
+                moveSmallZero();
+            });
+
+            $('#moveOne').click(function() {
+                freq = $("#freq").val();
+                targets[1] = $('#angleOne').val();
+                moveSmallOne();
+            });
+
+            $('#moveTwo').click(function() {
+                freq = $("#freq").val();
+                targets[2] = $('#angleTwo').val();
+                moveSmallTwo();
+            });
+
+            $('#moveThree').click(function() {
+                freq = $("#freq").val();
+                targets[3] = $('#angleThree').val();
+                moveSmallThree();
+            });
+
+            $('#moveFour').click(function() {
+                freq = $("#freq").val();
+                targets[4] = $('#angleFour').val();
+                moveSmallFour();
+            });
+
+            $('#moveFive').click(function() {
+                freq = $("#freq").val();
+                targets[5] = $('#angleFive').val();
+                moveSmallFive();
+            });
+
+            $("#move").click(function() {
+
+                freq = $("#freq").val();
+                targets[0] = $('#angleZero').val();
+                targets[1] = $('#angleOne').val();
+                targets[2] = $('#angleTwo').val();
+                targets[3] = $('#angleThree').val();
+                targets[4] = $('#angleFour').val();
+                targets[5] = $('#angleFive').val();
+
+                setInterval(setAll, 1000);
 
 
-        console.log("move");
-        s = "/channel/0/on/0/off/" + angleToOff(angleZero, freq) + "/freq/" + freq;
-        console.log(s);
-        $("#result").load(s, function() {});
-        console.log("move");
-        s = "/channel/1/on/0/off/" + angleToOff(angleOne, freq) + "/freq/" + freq;
-        console.log(s);
-        $("#result").load(s, function() {});
-        console.log("move");
-        s = "/channel/2/on/0/off/" + angleToOff(angleTwo, freq) + "/freq/" + freq;
-        console.log(s);
-        $("#result").load(s, function() {});
-        console.log("move");
-        s = "/channel/3/on/0/off/" + angleToOff(angleThree, freq) + "/freq/" + freq;
-        console.log(s);
-        $("#result").load(s, function() {});
-        console.log("move");
-        s = "/channel/4/on/0/off/" + angleToOff(angleFour, freq) + "/freq/" + freq;
-        console.log(s);
-        $("#result").load(s, function() {});
-        console.log("move");
-        s = "/channel/5/on/0/off/" + angleToOff(angleFive, freq) + "/freq/" + freq;
-        console.log(s);
-        $("#result").load(s, function() {});
+            });
 
-
-
-        $("#result").load(s, function() {
-            //alert("Load was performed.");
-        });
-    });
-
-    function angleToOff(angle, frequency){
-        var cycle = 1000/frequency;
-        var tickTime = 1000 * cycle / 4096;
-        var ms = (angle * 100 / 9) + 500;
-        return ms / tickTime;
-    }
-
-    </script>
-</body>
-
+            function angleToOff(angle, frequency){
+                var cycle = 1000/frequency;
+                var tickTime = 1000 * cycle / 4096;
+                var ms = (angle * 100 / 9) + 500;
+                return ms / tickTime;
+            }
+        </script>
+    </body>
 </html>
