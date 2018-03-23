@@ -16,7 +16,7 @@
         <input value="40" id="freq" />
         <div id ="inputs">
             <p>Channel 0: <input value="90" id="angleZero"/><button id ="moveZero">Move</button></p>
-            <p>Channel 1: <input value="90" id="angleOne"/><button id ="moveOne">Move</button></p>
+            <p>Channel 1: <input value="90" id="angleOne"/><button id ="moveOne">Move</button><button id ="lower">Lower</button></p>
             <p>Channel 2: <input value="90" id="angleTwo"/><button id ="moveTwo">Move</button></p>
             <p>Channel 3: <input value="90" id="angleThree"/><button id ="moveThree">Move</button></p>
             <p>Channel 4: <input value="90" id="angleFour"/><button id ="moveFour">Move</button></p>
@@ -27,20 +27,46 @@
         <script src="bootstrap-slider.js"></script>
         <script>
 
+        var initialized = false;
+
         var freq = 40;
         var range = 3;
 
         var targets = [90, 90, 90, 90, 90, 90];
+        var last = [80, 80, 80, 80, 80, 80];
         var currents = [90, 90, 90, 90, 90, 90];
 
         function setAll(){
+            initialized = true;
+            moveSmallZero();
+            moveSmallOne();
+            moveSmallTwo();
+            moveSmallThree();
+            moveSmallFour();
+            moveSmallFive();
             for(var i = 0; i < 6; i++){
-                if(currents[i]==targets[i]){
+                if(currents[i]==last[i]){
 
                 }else{
                     var s = "/channel/" + i + "/on/0/off/" + angleToOff(currents[i], freq) + "/freq/" + freq;
-                    $("#result").load(s, function() {}); 
+                    $("#result").load(s, function() {});
+                    last[i] = currents[i];
                 }   
+            }
+        }
+
+        function fastSetAll(){
+            initialized = true;
+            for(var i = 0; i < 6; i++){
+                for(var i = 0; i < 6; i++){
+                if(targets[i]==last[i]){
+
+                }else{
+                    var s = "/channel/" + i + "/on/0/off/" + angleToOff(targets[i], freq) + "/freq/" + freq;
+                    $("#result").load(s, function() {});
+                    last[i] = targets[i];
+                }   
+            }
             }
         }
 
@@ -53,7 +79,6 @@
                 currents[0]++;
             }
             console.log(targets[0] + ", "+ currents[0]);
-            setTimeout(moveSmallZero, 500);
         }
 
         function moveSmallOne(){
@@ -65,7 +90,6 @@
                 currents[1]++;
             }
             console.log(targets[1] + ", "+ currents[1]);
-            setTimeout(moveSmallOne, 500);
         }
 
         function moveSmallTwo(){
@@ -77,7 +101,6 @@
                 currents[2]++;
             }
             console.log(targets[2] + ", "+ currents[2]);
-            setTimeout(moveSmallTwo, 500);
         }
 
         function moveSmallThree(){
@@ -89,7 +112,6 @@
                 currents[3]++;
             }
             console.log(targets[3] + ", "+ currents[3]);
-            setTimeout(moveSmallThree, 500);
         }
 
         function moveSmallFour(){
@@ -101,55 +123,53 @@
                 currents[4]++;
             }
             console.log(targets[4] + ", "+ currents[4]);
-            setTimeout(moveSmallFour, 500);
         }
         
         function moveSmallFive(){
             if(targets[5]==currents[5]){
                 return;
-            }else if(targets[5] < currents[5]){
-                currents[5]--;
             }else{
-                currents[5]++;
+                currents[5] = targets[5];
             }
             console.log(targets[5] + ", "+ currents[5]);
-            setTimeout(moveSmallFive, 500);
-        }        
+        }   
+
+
 
             $('#moveZero').click(function() {
                 freq = $("#freq").val();
                 targets[0] = $('#angleZero').val();
-                moveSmallZero();
             });
 
             $('#moveOne').click(function() {
                 freq = $("#freq").val();
                 targets[1] = $('#angleOne').val();
-                moveSmallOne();
+            });
+
+            $('#lower').click(function() {
+                freq = $("#freq").val();
+                targets[1] = $('#angleOne').val();
+                targets[3] = 210 - $('#angleOne').val();
             });
 
             $('#moveTwo').click(function() {
                 freq = $("#freq").val();
                 targets[2] = $('#angleTwo').val();
-                moveSmallTwo();
             });
 
             $('#moveThree').click(function() {
                 freq = $("#freq").val();
                 targets[3] = $('#angleThree').val();
-                moveSmallThree();
             });
 
             $('#moveFour').click(function() {
                 freq = $("#freq").val();
                 targets[4] = $('#angleFour').val();
-                moveSmallFour();
             });
 
             $('#moveFive').click(function() {
                 freq = $("#freq").val();
                 targets[5] = $('#angleFive').val();
-                moveSmallFive();
             });
 
             $("#move").click(function() {
@@ -162,7 +182,10 @@
                 targets[4] = $('#angleFour').val();
                 targets[5] = $('#angleFive').val();
 
-                setInterval(setAll, 1000);
+                if(!initialized){
+                    setInterval(fastSetAll, 100);
+                    //setInterval(setAll, 500);
+                }
 
 
             });
