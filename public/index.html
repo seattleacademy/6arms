@@ -18,9 +18,9 @@
             <p>Channel 0: <input value="90" id="angleZero"/><button id ="moveZero">Move</button></p>
             <p>Channel 1: <input value="90" id="angleOne"/><button id ="moveOne">Move</button><button id ="lower">Lower</button></p>
             <p>Channel 2: <input value="90" id="angleTwo"/><button id ="moveTwo">Move</button></p>
-            <p>Channel 3: <input value="90" id="angleThree"/><button id ="moveThree">Move</button></p>
-            <p>Channel 4: <input value="90" id="angleFour"/><button id ="moveFour">Move</button></p>
-            <p>Channel 5: <input value="90" id="angleFive"/><button id ="moveFive">Move</button></p>
+            <p>Channel 3: <input value="90" id="angleThree"/><button id ="moveThree">Move</button><button id ="lower2">Lower</button></p>
+            <p>Channel 4: <input value="100" id="angleFour"/><button id ="moveFour">Move</button></p>
+            <p>Channel 5: <input value="50" id="angleFive"/><button id ="moveFive">Move</button></p>
         </div>
         <div id="result">...</div>
         <script src="jquery.min.js"></script>
@@ -32,7 +32,7 @@
         var freq = 40;
         var range = 3;
 
-        var targets = [90, 90, 90, 90, 90, 90];
+        var targets = [90, 90, 90, 90, 100, 50];
         var last = [80, 80, 80, 80, 80, 80];
         var currents = [90, 90, 90, 90, 90, 90];
 
@@ -150,6 +150,15 @@
                 freq = $("#freq").val();
                 targets[1] = $('#angleOne').val();
                 targets[3] = 210 - $('#angleOne').val();
+            });
+
+            $('#lower2').click(function() {
+                freq = $("#freq").val();
+                targets[1] = $('#angleOne').val() * 1;
+                targets[2] = $('#angleTwo').val() * 1;
+                targets[3] = -targets[1] - targets[2] + 270;
+                $('#angleThree').val(targets[3]);
+                console.log(targets[3]);
             });
 
             $('#moveTwo').click(function() {
