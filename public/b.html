@@ -32,70 +32,9 @@
         var freq = 40;
         var range = 3;
 
-        var delta = 1;
-
         var targets = [90, 90, 90, 90, 100, 50];
         var last = [80, 80, 80, 80, 80, 80];
         var currents = [90, 90, 90, 90, 90, 90];
-
-        function setZero(){
-            if(currents[0]!=targets[0])
-            {
-                var s = "/channel/0/on/0/off/" + angleToOff(currents[0], freq) + "/freq/" + freq;
-                $("#result").load(s, function() {});
-            }
-            setTimeout(setOne, 100);
-        }
-        function setOne(){
-            if(currents[1]!=targets[1])
-            {
-                var s = "/channel/1/on/0/off/" + angleToOff(currents[1], freq) + "/freq/" + freq;
-                $("#result").load(s, function() {});
-            }
-            setTimeout(setTwo, 100);
-        }
-        function setTwo(){
-            if(currents[2]!=targets[2])
-            {
-                var s = "/channel/2/on/0/off/" + angleToOff(currents[2], freq) + "/freq/" + freq;
-                $("#result").load(s, function() {});
-            }
-            setTimeout(setThree, 100);
-        }
-        function setThree(){
-            if(currents[3]!=targets[3])
-            {
-                var s = "/channel/3/on/0/off/" + angleToOff(currents[3], freq) + "/freq/" + freq;
-                $("#result").load(s, function() {});
-            }
-            setTimeout(setFour, 100);
-        }
-        function setFour(){
-            if(currents[4]!=targets[4])
-            {
-                var s = "/channel/4/on/0/off/" + angleToOff(currents[4], freq) + "/freq/" + freq;
-                $("#result").load(s, function() {});
-            }
-            setTimeout(setFive, 50);
-        }
-        function setFive(){
-            if(currents[5]!=targets[5])
-            {
-                var s = "/channel/5/on/0/off/" + angleToOff(currents[5], freq) + "/freq/" + freq;
-                $("#result").load(s, function() {});
-            }
-            setTimeout(setDelay, 50);
-        }
-        function setDelay(){
-            initialized = true;
-            moveSmallZero();
-            moveSmallOne();
-            moveSmallTwo();
-            moveSmallThree();
-            moveSmallFour();
-            moveSmallFive();
-            setTimeout(setZero, 100);
-        }
 
         function setAll(){
             initialized = true;
@@ -119,6 +58,7 @@
         function fastSetAll(){
             initialized = true;
             for(var i = 0; i < 6; i++){
+                for(var i = 0; i < 6; i++){
                 if(targets[i]==last[i]){
 
                 }else{
@@ -127,78 +67,71 @@
                     last[i] = targets[i];
                 }   
             }
+            }
         }
 
         function moveSmallZero(){
-            //targets[0] = $('#angleZero').val();
             if(targets[0]==currents[0]){
                 return;
             }else if(targets[0] < currents[0]){
-                currents[0] -= delta;
+                currents[0]--;
             }else{
-                currents[0] += delta;
+                currents[0]++;
             }
-            //console.log(targets[0] + ", "+ currents[0]);
+            console.log(targets[0] + ", "+ currents[0]);
         }
 
         function moveSmallOne(){
-            //targets[1] = $('#angleOne').val();
             if(targets[1]==currents[1]){
                 return;
             }else if(targets[1] < currents[1]){
-                currents[1] -= delta;
+                currents[1]--;
             }else{
-                currents[1] += delta;
+                currents[1]++;
             }
-            //console.log(targets[1] + ", "+ currents[1]);
+            console.log(targets[1] + ", "+ currents[1]);
         }
 
         function moveSmallTwo(){
-            //targets[2] = $('#angleTwo').val();
             if(targets[2]==currents[2]){
                 return;
             }else if(targets[2] < currents[2]){
-                currents[2] -= delta;
+                currents[2]--;
             }else{
-                currents[2] += delta;
+                currents[2]++;
             }
-            //console.log(targets[2] + ", "+ currents[2]);
+            console.log(targets[2] + ", "+ currents[2]);
         }
 
         function moveSmallThree(){
-            //targets[3] = $('#angleThree').val();
             if(targets[3]==currents[3]){
                 return;
             }else if(targets[3] < currents[3]){
-                currents[3] -= delta;
+                currents[3]--;
             }else{
-                currents[3] += delta;
+                currents[3]++;
             }
-            //console.log(targets[3] + ", "+ currents[3]);
+            console.log(targets[3] + ", "+ currents[3]);
         }
 
         function moveSmallFour(){
-            //targets[4] = $('#angleFour').val();
             if(targets[4]==currents[4]){
                 return;
             }else if(targets[4] < currents[4]){
-                currents[4] -= delta;
+                currents[4]--;
             }else{
-                currents[4] += delta;
+                currents[4]++;
             }
-            //console.log(targets[4] + ", "+ currents[4]);
+            console.log(targets[4] + ", "+ currents[4]);
         }
         
         function moveSmallFive(){
-            //targets[5] = $('#angleFive').val();
             if(targets[5]==currents[5]){
                 return;
-            }else if(targets[5] < currents[5]){
-                currents[5] -= delta;
             }else{
-                currents[5] += delta;
+                currents[5] = targets[5];
             }
-            //console.log(targets[5] + ", "+ currents[5]);
+            console.log(targets[5] + ", "+ currents[5]);
         }   
 
 
@@ -259,10 +192,8 @@
                 targets[5] = $('#angleFive').val();
 
                 if(!initialized){
-                    setDelay();
-                    //setInterval(fastSetAll, 100);
+                    setInterval(fastSetAll, 100);
                     //setInterval(setAll, 500);
-                    initialized = true;
                 }
 
 
