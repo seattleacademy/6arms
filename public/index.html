@@ -44,7 +44,7 @@
                 var s = "/channel/0/on/0/off/" + angleToOff(currents[0], freq) + "/freq/" + freq;
                 $("#result").load(s, function() {});
             }
-            setTimeout(setOne, 100);
+            setTimeout(setOne, 20);
         }
         function setOne(){
             if(currents[1]!=targets[1])
@@ -52,7 +52,7 @@
                 var s = "/channel/1/on/0/off/" + angleToOff(currents[1], freq) + "/freq/" + freq;
                 $("#result").load(s, function() {});
             }
-            setTimeout(setTwo, 100);
+            setTimeout(setTwo, 20);
         }
         function setTwo(){
             if(currents[2]!=targets[2])
@@ -60,7 +60,7 @@
                 var s = "/channel/2/on/0/off/" + angleToOff(currents[2], freq) + "/freq/" + freq;
                 $("#result").load(s, function() {});
             }
-            setTimeout(setThree, 100);
+            setTimeout(setThree, 20);
         }
         function setThree(){
             if(currents[3]!=targets[3])
@@ -68,7 +68,7 @@
                 var s = "/channel/3/on/0/off/" + angleToOff(currents[3], freq) + "/freq/" + freq;
                 $("#result").load(s, function() {});
             }
-            setTimeout(setFour, 100);
+            setTimeout(setFour, 20);
         }
         function setFour(){
             if(currents[4]!=targets[4])
@@ -76,7 +76,7 @@
                 var s = "/channel/4/on/0/off/" + angleToOff(currents[4], freq) + "/freq/" + freq;
                 $("#result").load(s, function() {});
             }
-            setTimeout(setFive, 50);
+            setTimeout(setFive, 10);
         }
         function setFive(){
             if(currents[5]!=targets[5])
@@ -84,7 +84,7 @@
                 var s = "/channel/5/on/0/off/" + angleToOff(currents[5], freq) + "/freq/" + freq;
                 $("#result").load(s, function() {});
             }
-            setTimeout(setDelay, 50);
+            setTimeout(setDelay, 10);
         }
         function setDelay(){
             initialized = true;
